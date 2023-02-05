@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Models\Student;
 
 class StudentController extends Controller
@@ -15,7 +15,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Student/Index',[
+            'student' => Student::all()
+        ]);
     }
 
     /**
