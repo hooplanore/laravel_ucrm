@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Student;
+use Inertia\Inertia;
 
 class StudentController extends Controller
 {
@@ -15,8 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Student/Index',[
-            'student' => Student::all()
+        return Inertia::render('Students/Index',[
+            'students' => Student::select('id','class_id','name','kana','email','tel','gender','birthday')->get()
         ]);
     }
 
@@ -27,7 +28,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Students/Create');
     }
 
     /**
@@ -38,7 +39,28 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        //
+        Student::create([
+            'class_id' => $request->class_id,
+            'name' => $request->name,
+            'kana' => $request->kana,
+            'email' => $request->email,
+            'password' => $request->password,
+            'zip_code' => $request->zip_code,
+            'address1' => $request->address1,
+            'address2' => $request->address2,
+            'tel' => $request->tel,
+            'gender' => $request->gender,
+            'bitrhday' => $request->birthday,
+            'joindate' => $request->joindate,
+            'is_payment' => $request->is_payment,
+            'introducer' => $request->introducer,
+            'parent_name' => $request->parent_name,
+            'canpaign' => $request->canpaign,
+            'memo' => $request->memo,
+            'is_rest' => $request->is_rest,
+        ]);
+
+        return to_route('students.index');
     }
 
     /**
