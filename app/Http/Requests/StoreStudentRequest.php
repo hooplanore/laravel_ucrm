@@ -25,6 +25,7 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:50'],
+            'kana' => ['required', 'max:50'],
         ];
     }
 }

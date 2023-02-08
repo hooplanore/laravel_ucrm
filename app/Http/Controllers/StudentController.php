@@ -17,7 +17,7 @@ class StudentController extends Controller
     public function index()
     {
         return Inertia::render('Students/Index',[
-            'students' => Student::select('id','class_id','name','kana','email','tel','gender','birthday')->get()
+            'students' => Student::select('id','class_id','name','kana','email','tel','gender','birthday','joindate','is_payment','introducer',)->get()
         ]);
     }
 
@@ -71,7 +71,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return Inertia::render('Students/Show',[
+            'student' => $student
+        ]);
     }
 
     /**
@@ -82,7 +84,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return Inertia::render('Students/Edit',[
+            'student' => $student
+        ]);
     }
 
     /**
@@ -94,7 +98,33 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        //
+        // dd($student->name, $request->name);
+
+        $student->class_id = $request->class_id;
+        $student->name = $request->name;
+        $student->kana = $request->kana;
+        $student->email = $request->email;
+        $student->password = $request->password;
+        $student->zip_code = $request->zip_code;
+        $student->address1 = $request->address1;
+        $student->address2 = $request->address2;
+        $student->tel = $request->tel;
+        $student->gender = $request->gender;
+        $student->birthday = $request->birthday;
+        $student->joindate = $request->joindate;
+        $student->is_payment = $request->is_payment;
+        $student->introducer = $request->introducer;
+        $student->parent_name = $request->parent_name;
+        $student->canpaign = $request->canpaign;
+        $student->memo = $request->memo;
+        $student->is_rest = $request->is_rest;
+        $student->save();
+
+        return to_route('students.index')
+        ->with([
+            'message' => '更新しました',
+            'status' => 'success'
+        ]);
     }
 
     /**

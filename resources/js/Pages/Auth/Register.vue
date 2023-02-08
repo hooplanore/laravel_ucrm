@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
 const form = useForm({
     name: '',
@@ -24,7 +25,7 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
-
+        <BreezeValidationErrors :errors="form.errors" />
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />

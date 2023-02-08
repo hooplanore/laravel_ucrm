@@ -25,15 +25,14 @@ return new class extends Migration
             $table->string('address2')->nullable();
             $table->string('tel')->nullable();
             $table->tinyInteger('gender')->nullable();
-            $table->date('birthday')->nullable();
-            $table->date('joindate')->nullable();
+            $table->string('birthday')->nullable();
+            $table->string('joindate')->nullable();
             $table->tinyInteger('is_payment')->nullable();
             $table->string('introducer')->nullable();
             $table->string('parent_name')->nullable();
             $table->string('canpaign')->nullable();
             $table->string('memo')->nullable()->nullable();
             $table->tinyInteger('is_rest')->nullable();
-            $table->timestamps();
         });
     }
 

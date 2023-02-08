@@ -43,7 +43,11 @@ defineProps({
                                 </thead>
                                 <tbody>
                                 <tr v-for="student in students" :key="student.id">
-                                    <td class="px-4 py-3">{{ student.id }}</td>
+                                    <td class="px-4 py-3">
+                                    <Link :href="route('students.show',{student:student.id})">
+                                        {{ student.id }}
+                                    </Link>
+                                    </td>
                                     <td class="px-4 py-3">{{ student.class_id }}</td>
                                     <td class="px-4 py-3">{{ student.name }}</td>
                                     <td class="px-4 py-3">{{ student.kana }}</td>

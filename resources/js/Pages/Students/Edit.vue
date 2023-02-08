@@ -3,39 +3,44 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import { reactive } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
-import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { propsToAttrMap } from '@vue/shared';
+
+const props = defineProps({
+    student:Object
+})
 
 const form = reactive({
-    class_id : "",
-    name : "",
-    kana: "",
-    email: "",
-    password: "",
-    zip_code: "",
-    address1: "",
-    address2: "",
-    tel: "",
-    gender: "",
-    birthday: "",
-    joindate: "",
-    is_payment: "",
-    introducer: "",
-    parent_name: "",
-    canpaign: "",
-    memo: "",
-    is_rest: ""
+    id: props.student.id,
+    class_id : props.student.class_id,
+    name : props.student.name,
+    kana: props.student.kana,
+    email: props.student.email,
+    password: props.student.password,
+    zip_code: props.student.zip_code,
+    address1: props.student.address1,
+    address2: props.student.address2,
+    tel: props.student.tel,
+    gender: props.student.gender,
+    birthday: props.student.birthday,
+    joindate: props.student.joindate,
+    is_payment: props.student.is_payment,
+    introducer: props.student.introducer,
+    parent_name: props.student.parent_name,
+    canpaign: props.student.canpaign,
+    memo: props.student.memo,
+    is_rest: props.student.is_rest
 })
-const storeStudent = ()=> {
-    Inertia.post('/students',form)
+const updateStudent = id => {
+    Inertia.put(route('students.update',{ student: id}),form)
 }
 </script>
 
 <template>
-    <Head title="生徒登録" />
+    <Head title="生徒編集" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">生徒登録</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">生徒編集</h2>
         </template>
 
         <div class="py-12">
@@ -43,8 +48,7 @@ const storeStudent = ()=> {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                        <section class="text-gray-600 body-font relative">
-        <BreezeValidationErrors :errors="form.errors" />
-                        <form @submit.prevent="storeStudent">
+                        <form @submit.prevent="updateStudent(form.id)">
                         <div class="container px-5 py-8 mx-auto">
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                             <div class="flex flex-wrap -m-2">
@@ -153,11 +157,14 @@ const storeStudent = ()=> {
                                 <div class="p-2 w-full">
                                 <div class="relative">
                                     <label for="is_rest" class="leading-7 text-sm text-gray-600">在籍・休会</label>
-                                    <input type="text" id="is_rest" name="is_rest" v-model="form.is_rest" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="radio" id="is_rest" name="is_rest" v-model="form.is_rest" value="0" >
+                                    <label class="ml-2 mr-4">在籍</label>
+                                    <input type="radio" id="is_rest" name="is_rest" v-model="form.is_rest" value="1" >
+                                    <label class="ml-2 mr-4">休会</label>
                                 </div>
                                 </div>
                                 <div class="p-2 w-full">
-                                <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
+                                <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新する</button>
                                 </div>
                             </div>
                             </div>
